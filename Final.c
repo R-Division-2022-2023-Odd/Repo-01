@@ -1,6 +1,26 @@
+//Lights
+
 int EL = 1;  // Error Light
 int GL = 2;  // Guard Light
 int PL = 3;  // Processing light
+
+//Stepper Pins
+#define SPLM1 4
+#define SPLM2 5
+#define SPLM3 6
+#define SPLM4 7
+
+#define SPCM1 8
+#define SPCM2 9
+#define SPCM3 10
+#define SPCM4 11
+
+//Buzzer pins
+#define BP1 12
+
+//Servo pins
+#include <Servo.h>
+Servo SM;
 
 
 //StepLM - Length Calculating Motor
@@ -9,7 +29,31 @@ int PL = 3;  // Processing light
 void setup() 
 {
     Serial1.begin(9600); // Bluetooth Input
-    int NR = 0;
+    Serial.begin(9600);
+
+  //Pin Declaration Lights
+    pinMode(EL, OUTPUT);
+    pinMode(GL, OUTPUT);
+    pinMode(PL, OUTPUT);
+
+  //Pin Declarations stepper motor
+    pinMode(SPLM1, OUTPUT);
+    pinMode(SPLM2, OUTPUT);
+    pinMode(SPLM3, OUTPUT);
+    pinMode(SPLM4, OUTPUT);
+
+    pinMode(SPCM1, OUTPUT);
+    pinMode(SPCM2, OUTPUT);
+    pinMode(SPCM3, OUTPUT);
+    pinMode(SPCM4, OUTPUT);
+
+  //Pin Declarations Buzzer
+
+    pinMode(BP1, OUTPUT);
+
+  //Pin Declarations Servo
+  SM.attach(13);
+
 
 }
 
@@ -19,7 +63,10 @@ void loop()
       P =  Serial1.read(); // Read Position form User
       /*
         Decode input
+        
       */
+          int NR = 0;
+
       if(P == 0)
       {
         
@@ -46,7 +93,7 @@ void loop()
       }
       else if(P == 1)
       {
-        While(P==1)
+        while(P==1)
         LEDBN(EL); // Error Light ON
         //Display Wire not present
         //Manual Move StepLM
@@ -96,7 +143,8 @@ void StepCM()
 void StepCMF()
 {
   //Move Stepper Actuator. Not Input Needed. Just pre-detremined Movement.
-  //Move Servo to bring wire head to cut position.
+  SM.write(35);  
+  delay(15);
   //Add delay
   //Add Bleep
 }
