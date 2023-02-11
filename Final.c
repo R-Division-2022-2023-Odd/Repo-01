@@ -5,12 +5,12 @@ int GL = 2;  // Guard Light
 int PL = 3;  // Processing light
 
 //Stepper Pins
-#define SPLM1 4
+#define SPLM1 4   //StepLM - Length Calculating Motor
 #define SPLM2 5
 #define SPLM3 6
 #define SPLM4 7
 
-#define SPCM1 8
+#define SPCM1 8   //StepCM - Wire Cutter Actuator
 #define SPCM2 9
 #define SPCM3 10
 #define SPCM4 11
@@ -22,9 +22,9 @@ int PL = 3;  // Processing light
 #include <Servo.h>
 Servo SM;
 
+//Wire tester Pin
+#define WTP 13
 
-//StepLM - Length Calculating Motor
-//StepCM - Wire Cutter Actuator
 
 void setup() 
 {
@@ -53,12 +53,15 @@ void setup()
 
   //Pin Declarations Servo
   SM.attach(13);
+  //Pin Declration Wire Tester
+  pinMode(WTP, OUTPUT);
 
 
 }
 
 void loop() 
 {     
+    digitalWrite(WTP, HIGH);
       char St, Le, N, P;
       P =  Serial1.read(); // Read Position form User
       /*
@@ -108,19 +111,19 @@ void loop()
 
 void LEDN(int P)
 {
-        pinMode(P, HIGH);
+        digitalWrite(P, HIGH);
 }
 
 void LEDF(int P)
 {
-        pinMode(P, LOW);
+        digitalWrite(P, LOW);
 }
 
 void LEDBN(int P)
 {
-        pinMode(P, HIGH);
+        digitalWrite(P, HIGH);
         delay(1000);
-        pinMode(P, LOW);
+        digitalWrite(P, LOW);
         delay(1000);
 }
 
